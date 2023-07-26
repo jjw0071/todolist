@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do Detail</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h1 class="mb-4">할 일 상세</h1>
+  <form th:action="@{/update/{id}(id=${todo.id})}" method="post">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" name="title" th:value="${todo.title}">
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-primary">수정</button>
+      </div>
+    </div>
+    <div class="form-check mb-3">
+      <input type="checkbox" class="form-check-input" name="completed" th:checked="${todo.completed}" onchange="this.form.submit()">
+      <label class="form-check-label">완료</label>
+    </div>
+  </form>
+  <form th:action="@{/delete/{id}(id=${todo.id})}" method="get">
+    <button type="submit" class="btn btn-danger">삭제</button>
+  </form>
+</div>
+</body>
+</html>
