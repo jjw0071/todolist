@@ -17,5 +17,7 @@ public class Todo {
     private String title;
     private boolean completed;
 
-    // Getters and setters, constructors
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
 }

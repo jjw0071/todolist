@@ -3,43 +3,48 @@ package com.jwjung.todolist.controller;
 import com.jwjung.todolist.model.Todo;
 import com.jwjung.todolist.service.TodoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController
+@RequestMapping("/api/todos")
 @RequiredArgsConstructor
 public class TodoController {
+
     private final TodoService todoService;
 
-    @GetMapping("/")
-    public String getTodoList(Model model) {
-        model.addAttribute("todos", todoService.getAllTodos());
-        return "index";
+
+    @GetMapping
+    public ResponseEntity<List<Todo>> getAllTodos() {
+        List<Todo> todos = todoService.getAllTodos();
+        return ResponseEntity.ok(todos);
     }
 
-    @GetMapping("/todo/{id}")
-    public String getTodoDetail(@PathVariable Long id, Model model) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Todo> getTodoById(@PathVariable Long id) {
         Todo todo = todoService.getTodoById(id);
-        model.addAttribute("todo", todo);
-        return "todo_detail";
+        return ResponseEntity.ok(todo);
     }
 
-    @PostMapping("/add")
-    public String addTodo(@ModelAttribute Todo todo) {
-        todoService.addTodo(todo);
-        return "redirect:/";
+    @PostMapping
+    public ResponseEntity<Todo> addTodo(@RequestBody Todo todo) {
+        Todo addedTodo = todoService.addTodo(todo);
+        return ResponseEntity.ok(addedTodo);
     }
 
-    @PostMapping("/update/{id}")
-    public String updateTodo(@PathVariable Long id, @ModelAttribute Todo todo) {
-        todoService.updateTodoById(id, todo);
-        return "redirect:/";
+    @PostMapping("/{id}")
+    public ResponseEntity<Todo> updateTodo(@PathVariable Long id, @RequestBody Todo todo) {
+        Todo updatedTodo = todoService.updateTodo(id, todo);
+        return ResponseEntity.ok(updatedTodo);
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteTodo(@PathVariable Long id) {
-        todoService.deleteTodoById(id);
-        return "redirect:/";
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
+        todoService.deleteTodo(id);
+        return ResponseEntity.noContent().build();
     }
 }
