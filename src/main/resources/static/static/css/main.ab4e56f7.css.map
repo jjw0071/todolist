@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.ab4e56f7.css","mappings":"AAAA,WAEE,iBAAkB,CADlB,4BAEF","sources":["App.css"],"sourcesContent":[".completed {\n  text-decoration: line-through;\n  font-style: italic;\n}"],"names":[],"sourceRoot":""}
